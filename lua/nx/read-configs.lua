@@ -81,7 +81,13 @@ end
 
 function _M.read_projects(callback)
 	console.log 'Reading individual projects'
-	local projects = _G.nx.graph.graph.nodes or {}
+  local projects
+  if not _G.nx or not _G.nx.graph or not _G.nx.graph.graph then
+    console.log 'Nx graph was not found'
+    projects = {}
+  else
+    projects = _G.nx.graph.graph.nodes or {}
+  end
 	local keys = utils.keys(projects)
 	local count = #keys
 	local loadedCount = 0
@@ -155,7 +161,14 @@ function _M.read_workspace_generators(callback)
 		end
 	end
 
-	local projects = _G.nx.graph.graph.nodes or {}
+
+  local projects
+  if not _G.nx or not _G.nx.graph or not _G.nx.graph.graph then
+    console.log 'Nx graph was not found'
+    projects = {}
+  else
+    projects = _G.nx.graph.graph.nodes or {}
+  end
 	for _, projectSchema in pairs(projects) do
 		local path = projectSchema.data.root
 		_M.rf(path .. '/package.json', function(f)
