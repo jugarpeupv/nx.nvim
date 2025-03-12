@@ -186,6 +186,9 @@ function _M.read_workspace_generators(callback)
 									for name, gen in pairs(schematics[generators]) do
 										genCount = genCount + 1
 
+                    if not gen or not gen.schema then
+                      return
+                    end
 										_M.rf(path .. '/' .. gen.schema,
 											function(schema)
 												add_gen(gens, f.name, name, schema)
@@ -305,6 +308,9 @@ function _M.read_external_generators(callback)
 									for name, gen in pairs(schematics[generators]) do
 										genCount = genCount + 1
 
+                    if not gen or not gen.schema then
+                      return
+                    end
 										_M.rf(schematics_dir .. '/' .. gen.schema,
 											function(schema)
 												add_gen(value, name, schema)
